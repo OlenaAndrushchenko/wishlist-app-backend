@@ -1,5 +1,7 @@
 package dev.olena.wishapp.UserAccount;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,8 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String register(@RequestBody UserAccountDto userAccountDto) {
-
-        return registerService.save(userAccountDto);
+    public ResponseEntity<String> register(@RequestBody UserAccountDto userAccountDto) {
+        String result = registerService.save(userAccountDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result); /*registerService.save(userAccountDto);*/
     }
 }
