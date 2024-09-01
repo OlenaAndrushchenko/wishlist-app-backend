@@ -2,7 +2,9 @@ package dev.olena.wishapp.UserAccount;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class UserAccountDto {
     
     @NotBlank(message = "Username cannot be empty")
