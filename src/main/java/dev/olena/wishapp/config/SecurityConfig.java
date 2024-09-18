@@ -21,6 +21,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, apiEndpoint + "/register").permitAll()
+                .requestMatchers(HttpMethod.POST, apiEndpoint + "/auth/**").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(httpBasic -> httpBasic.realmName("WishappRealm"));
