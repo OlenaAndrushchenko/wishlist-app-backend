@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegisterService {
     
-    UserAccountRepository userAccountRepository;
+   private final UserAccountRepository userAccountRepository;
 
     public RegisterService(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
