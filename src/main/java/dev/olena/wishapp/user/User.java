@@ -1,4 +1,4 @@
-package dev.olena.wishapp.UserAccount;
+package dev.olena.wishapp.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserAccount {
+public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

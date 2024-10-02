@@ -1,4 +1,4 @@
-package dev.olena.wishapp.UserAccount;
+package dev.olena.wishapp.user;
 
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ public class RegisterService {
         this.userAccountRepository = userAccountRepository;
     }
 
-    public String save(UserAccountDto userAccountDto) {
+    public String save(UserDTO userAccountDto) {
 
-        UserAccount userAccount = new UserAccount();
+        User userAccount = new User();
 
         userAccount.setUsername(userAccountDto.getUsername());
         userAccount.setPassword(userAccountDto.getPassword());

@@ -18,6 +18,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import dev.olena.wishapp.user.RegisterController;
+import dev.olena.wishapp.user.RegisterService;
+import dev.olena.wishapp.user.UserDTO;
+
 @ExtendWith(MockitoExtension.class)
 public class RegisterControllerTest {
     
@@ -35,10 +39,10 @@ public class RegisterControllerTest {
 
     @Test
     public void testRegisterAccount() throws Exception {
-        UserAccountDto userAccountDto = new UserAccountDto("user1Test", "passTest");
-        when(registerService.save(any(UserAccountDto.class))).thenReturn("User userTest has been registered");
+        UserDTO userAccountDto = new UserDTO("user1Test", "passTest");
+        when(registerService.save(any(UserDTO.class))).thenReturn("User userTest has been registered");
 
-        ArgumentCaptor<UserAccountDto> captor = ArgumentCaptor.forClass(UserAccountDto.class);
+        ArgumentCaptor<UserDTO> captor = ArgumentCaptor.forClass(UserDTO.class);
 
         mockMvc.perform(post("/api/v1/register")
             .contentType(MediaType.APPLICATION_JSON)

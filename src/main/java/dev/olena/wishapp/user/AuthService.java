@@ -1,4 +1,4 @@
-package dev.olena.wishapp.UserAccount;
+package dev.olena.wishapp.user;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class AuthService {
         this.userAccountRepository = userAccountRepository;
     }
 
-    public String login(UserAccountDto userAccountDto) {
+    public String login(UserDTO userAccountDto) {
         return userAccountRepository.findByUsername(userAccountDto.getUsername())
                 .filter(user -> user.getPassword().equals(userAccountDto.getPassword()))
                 .map(user -> "User " + user.getUsername() + " has logged in")

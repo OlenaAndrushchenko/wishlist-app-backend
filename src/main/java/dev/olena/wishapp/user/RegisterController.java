@@ -1,4 +1,4 @@
-package dev.olena.wishapp.UserAccount;
+package dev.olena.wishapp.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class RegisterController {
     }
 
     @PostMapping
-    public ResponseEntity<String> register(@RequestBody UserAccountDto userAccountDto) {
+    public ResponseEntity<String> register(@RequestBody UserDTO userAccountDto) {
         String result = registerService.save(userAccountDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(result); /*registerService.save(userAccountDto);*/
     }

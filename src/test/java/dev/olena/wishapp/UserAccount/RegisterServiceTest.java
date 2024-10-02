@@ -8,6 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import dev.olena.wishapp.user.RegisterService;
+import dev.olena.wishapp.user.User;
+import dev.olena.wishapp.user.UserDTO;
+import dev.olena.wishapp.user.UserAccountRepository;
+
 @SpringBootTest
 public class RegisterServiceTest {
     
@@ -19,10 +24,10 @@ public class RegisterServiceTest {
 
     @Test
     void testSaveUser() {
-        UserAccountDto dto = new UserAccountDto("userTest", "passTest");
-        UserAccount userAccount = new UserAccount(null, "userTest", "passTest");
+        UserDTO dto = new UserDTO("userTest", "passTest");
+        User userAccount = new User(null, "userTest", "passTest");
         
-        when(userAccountRepository.save(any(UserAccount.class))).thenReturn(userAccount);
+        when(userAccountRepository.save(any(User.class))).thenReturn(userAccount);
 
         String result = registerService.save(dto);
         assert(result.equals("User userTest has been registered"));

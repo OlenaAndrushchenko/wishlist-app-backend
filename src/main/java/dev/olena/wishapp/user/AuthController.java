@@ -1,4 +1,4 @@
-package dev.olena.wishapp.UserAccount;
+package dev.olena.wishapp.user;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody UserAccountDto userAccountDto) {
+    public ResponseEntity<String> login(@Valid @RequestBody UserDTO userAccountDto) {
         String result = authService.login(userAccountDto);
         return ResponseEntity.ok(result);
     }
