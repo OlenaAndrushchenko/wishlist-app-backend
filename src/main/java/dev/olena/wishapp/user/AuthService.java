@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
     
-    private final UserAccountRepository userAccountRepository;
+    private final UserRepository userAccountRepository;
 
-    public AuthService(UserAccountRepository userAccountRepository) {
+    public AuthService(UserRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
 

@@ -11,13 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import dev.olena.wishapp.user.RegisterService;
 import dev.olena.wishapp.user.User;
 import dev.olena.wishapp.user.UserDTO;
-import dev.olena.wishapp.user.UserAccountRepository;
+import dev.olena.wishapp.user.UserRepository;
 
 @SpringBootTest
 public class RegisterServiceTest {
     
     @Mock
-    private UserAccountRepository userAccountRepository;
+    private UserRepository userAccountRepository;
 
     @InjectMocks
     private RegisterService registerService;
