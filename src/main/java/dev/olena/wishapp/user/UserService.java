@@ -1,6 +1,8 @@
 package dev.olena.wishapp.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,13 @@ public class UserService {
 
         userRepository.save(user);
         return "User details have been updated";
+    }
+
+    public User getCurrentUser() {
+        Authentication authentication = (Authentication) SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            return (User) authentication.getPrincipal();
+        }
+        throw new IllegalStateException("No authenticated user found");
     }
 }
