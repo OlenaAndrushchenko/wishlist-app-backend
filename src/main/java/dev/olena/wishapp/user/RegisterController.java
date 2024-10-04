@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.olena.wishapp.utils.ValidationGroups;
 
 @RestController
-@RequestMapping(path ="api/v1/register")
+@RequestMapping(path ="/api/v1/register")
 public class RegisterController {
     
     RegisterService registerService;

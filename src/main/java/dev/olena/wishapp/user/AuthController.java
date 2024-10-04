@@ -17,7 +17,7 @@ import dev.olena.wishapp.utils.ValidationGroups;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(path = "api/v1/auth")
+@RequestMapping(path = "/api/v1/auth")
 public class AuthController {
     
     @Autowired
