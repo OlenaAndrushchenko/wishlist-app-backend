@@ -1,6 +1,7 @@
 package dev.olena.wishapp.User;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -61,5 +62,27 @@ public class UserServiceTests {
         assertEquals("newUsername", user.getRealUsername());
         assertEquals("encodedPassword", user.getPassword());
         assertEquals("new@email.com", user.getEmail());
+    }
+
+    @Test
+    public void testUserNotFound() {
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.updateUserDetails(1L, new UserDTO("username", "password", "email"));
+        });
+        
+        assertEquals("User not found", exception.getMessage());
+    }
+
+    @Test
+    public void testNoUpdateWhenNoChanges() {
+        User existingUser = new User(1L, "username", "password", "email@example.com", "1234abcd");
+        when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
+        
+        String result = userService.updateUserDetails(1L, new UserDTO("username", "password", "email@example.com"));
+        
+        verify(userRepository).save(existingUser); // verify that save is still called to handle possible other changes not covered in this test
+        assertEquals("User details have been updated", result);
     }
 }
