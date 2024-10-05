@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dev.olena.wishapp.WishlistItem.WishlistItemDTO;
+import dev.olena.wishapp.WishlistItem.WishlistItemService;
 import dev.olena.wishapp.user.User;
 
 @Service
@@ -14,6 +16,9 @@ public class WishlistService {
     
     @Autowired
     private WishlistRepository wishlistRepository;
+
+    @Autowired
+    private WishlistItemService wishlistItemService;
 
     public WishlistDTO createWishlist(WishlistDTO wishlistDTO, User user) {
         
@@ -39,7 +44,13 @@ public class WishlistService {
             throw new IllegalArgumentException("User is not authorized to read this wishlist");
         }
 
-        return new WishlistDTO(wishlist);
+        WishlistDTO dto = new WishlistDTO(wishlist);
+
+        if (!wishlist.getItems().isEmpty()) {
+            List<WishlistItemDTO> items = wishlistItemService.getItemsByWishlist(id);
+            dto.setItems(items);
+        }
+        return dto;
     }
 
     public WishlistDTO updateWishlist(Long id, WishlistDTO wishlistDTO, User user) {
@@ -76,6 +87,17 @@ public class WishlistService {
     public WishlistDTO readSharedWishlist(String userIdentifier, String shareableUrl) {
         String path = userIdentifier + "/" + shareableUrl;
         Wishlist wishlist = wishlistRepository.findByUser_userIdentifierAndShareableUrl(userIdentifier, path).orElseThrow( () -> new IllegalArgumentException("Wishlist not found"));
-        return new WishlistDTO(wishlist);
+        
+        if (!wishlist.isShared()) {
+            throw new IllegalStateException("Wishlist is not shared");
+        }
+
+        WishlistDTO dto = new WishlistDTO(wishlist);
+
+        if (!wishlist.getItems().isEmpty()) {
+            List<WishlistItemDTO> items = wishlistItemService.getItemsByWishlist(wishlist.getId());
+            dto.setItems(items);
+        }
+        return dto;
     }
 }

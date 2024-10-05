@@ -1,7 +1,10 @@
 package dev.olena.wishapp.wishlist;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import dev.olena.wishapp.WishlistItem.WishlistItemDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,6 +18,7 @@ public class WishlistDTO {
     private boolean shared;
     private String shareableUrl;
     private String userIdentifier;
+    private List<WishlistItemDTO> items;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -27,5 +31,9 @@ public class WishlistDTO {
         this.userIdentifier = wishlist.getUser().getUserIdentifier();
         this.createdAt = wishlist.getCreatedAt();
         this.updatedAt = wishlist.getUpdatedAt();
+        this.items = wishlist.getItems().isEmpty() ? null : 
+                    wishlist.getItems().stream()
+                            .map(WishlistItemDTO::new)
+                            .collect(Collectors.toList());
     }
 }
