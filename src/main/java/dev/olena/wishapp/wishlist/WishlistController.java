@@ -67,11 +67,18 @@ public class WishlistController {
 
     @GetMapping("/shared/{userIdentifier}/{shareableUrl}")
     public ResponseEntity<WishlistDTO> getPublicWishlist(@PathVariable String userIdentifier, @PathVariable String shareableUrl) {
-        WishlistDTO result = wishlistService.readSharedWishlist(userIdentifier, shareableUrl);
-        if (result != null && result.isShared()) {
-            return ResponseEntity.ok(result);
+
+        try {
+            WishlistDTO result = wishlistService.readSharedWishlist(userIdentifier, shareableUrl);
+            if (result != null && result.isShared()) {
+                return ResponseEntity.ok(result);
+            }
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            
+        } catch (IllegalStateException | IllegalArgumentException e) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.notFound().build();
     }
 
 }
