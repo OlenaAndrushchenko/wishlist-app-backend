@@ -6,6 +6,10 @@ CREATE TABLE IF NOT EXISTS user_account (
     email VARCHAR(255) NOT NULL UNIQUE,
     user_identifier VARCHAR(255) NOT NULL UNIQUE
 );
--- -- Insert initial data, handling potential duplicates to avoid errors on app restart.
-INSERT INTO user_account (username, password, email, user_identifier) VALUES ('user1', '$2a$12$goV6ZPdKrYzKTBXU02r.9.qUS.aSbtw.kGLK8S7z4gkF/4ygGu076', 'user1@email.com', 'uid12345')
-ON DUPLICATE KEY UPDATE username = VALUES(username), password = VALUES(password), email = VALUES(email), user_identifier = VALUES(user_identifier);
+
+-- This statement will attempt to insert a new user only if a user with the same username does not already exist.
+INSERT INTO user_account (username, password, email, user_identifier)
+SELECT * FROM (SELECT 'user1' AS username, '$2a$12$goV6ZPdKrYzKTBXU02r.9.qUS.aSbtw.kGLK8S7z4gkF/4ygGu076' AS password, 'user1@email.com' AS email, 'uid12345' AS user_identifier) AS tmp
+WHERE NOT EXISTS (
+    SELECT 1 FROM user_account WHERE username = tmp.username
+);
