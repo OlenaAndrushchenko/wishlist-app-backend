@@ -26,6 +26,10 @@ public class JwtUtil {
     public JwtUtil(@Value("${application.security.jwt.secret}") String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
+
+    public void setExpirationTime(Long expirationInMillis) {
+        this.jwtExpirationInMillis = expirationInMillis;
+    }
     
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -44,7 +48,7 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
