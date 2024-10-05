@@ -58,7 +58,7 @@ public class User implements UserDetails {
     }
 
     @PrePersist
-    private void generateUserIdentifier() {
+    public void generateUserIdentifier() {
         this.userIdentifier = generateShortUUID();
     }
 
