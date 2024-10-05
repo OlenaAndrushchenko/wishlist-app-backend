@@ -1,8 +1,10 @@
 package dev.olena.wishapp.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class RegisterService {
@@ -19,7 +21,7 @@ public class RegisterService {
     public String save(UserDTO userDto) {
 
         if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("User with email " + userDto.getEmail() + " already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "User with email " + userDto.getEmail() + " already exists");
         }
 
         User user = new User();
