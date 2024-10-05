@@ -1,5 +1,6 @@
 # project files to ignore
 .env
+firebase.json
 
 HELP.md
 target/
