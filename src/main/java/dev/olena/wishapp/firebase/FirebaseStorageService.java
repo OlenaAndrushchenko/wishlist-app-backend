@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Storage;
 
 @Service
+@Profile("!test")
 public class FirebaseStorageService {
 
     private final Storage storage;

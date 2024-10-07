@@ -3,6 +3,7 @@ package dev.olena.wishapp.firebase;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import com.google.firebase.FirebaseOptions;
 import jakarta.annotation.PostConstruct;
 
 @Service
+@Profile("!test")
 public class FirebaseInitialization {
     
     private final String storageBucket;
