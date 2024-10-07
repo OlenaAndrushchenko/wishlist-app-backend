@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,11 +35,17 @@ public class WishlistItemController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createWishlistItem(@RequestParam("file") MultipartFile file,  @RequestParam("data") String wishlistItemDTOJson) {
+    public ResponseEntity<?> createWishlistItem(@RequestParam(value = "file", required = false) MultipartFile file,  @RequestParam("data") String wishlistItemDTOJson) {
         try {
             WishlistItemDTO wishlistItemDTO = objectMapper.readValue(wishlistItemDTOJson, WishlistItemDTO.class);
-            String imageUrl = firebaseStorageService.uploadFile(file);
-            wishlistItemDTO.setImageUrl(imageUrl);
+
+            if (file != null && !file.isEmpty()) {
+                String imageUrl = firebaseStorageService.uploadFile(file);
+                wishlistItemDTO.setImageUrl(imageUrl);
+            } else {
+                wishlistItemDTO.setImageUrl(null);
+            }
+
             WishlistItemDTO result = wishlistItemService.createWishlistItem(wishlistItemDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
         } catch (IOException e) {
@@ -55,9 +60,21 @@ public class WishlistItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<WishlistItemDTO> updateWishlistItem(@PathVariable Long id, @RequestBody WishlistItemDTO wishlistItemDTO) {
-        WishlistItemDTO result = wishlistItemService.updateWishlistItem(id, wishlistItemDTO);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<?> updateWishlistItem(@PathVariable Long id, @RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("data") String wishlistItemDTOJson) {
+        try {
+            WishlistItemDTO wishlistItemDTO = objectMapper.readValue(wishlistItemDTOJson, WishlistItemDTO.class);
+            if (file != null && !file.isEmpty()) {
+                String imageUrl = firebaseStorageService.uploadFile(file);
+                wishlistItemDTO.setImageUrl(imageUrl);
+            } else {
+                wishlistItemDTO.setImageUrl(null);
+            }
+
+            WishlistItemDTO result = wishlistItemService.updateWishlistItem(id, wishlistItemDTO);
+            return ResponseEntity.ok(result);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to upload image or parse data");
+        }
     }
 
     @DeleteMapping("/{id}")
