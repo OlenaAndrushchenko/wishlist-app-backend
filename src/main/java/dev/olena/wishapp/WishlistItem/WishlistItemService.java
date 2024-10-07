@@ -46,7 +46,9 @@ public class WishlistItemService {
         item.setName(wishlistItemDTO.getName());
         item.setDescription(wishlistItemDTO.getDescription());
         item.setItemUrl(wishlistItemDTO.getItemUrl());
-        item.setImageUrl(wishlistItemDTO.getImageUrl());
+        if (wishlistItemDTO.getImageUrl() != null && !wishlistItemDTO.getImageUrl().isEmpty()) {
+            item.setImageUrl(wishlistItemDTO.getImageUrl());
+        }
 
         return new WishlistItemDTO(wishlistItemRepository.save(item));
     }

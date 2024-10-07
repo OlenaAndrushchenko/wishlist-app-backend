@@ -3,6 +3,7 @@ package dev.olena.wishapp.WishlistItem;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +22,7 @@ import dev.olena.wishapp.firebase.FirebaseStorageService;
 
 @RestController
 @RequestMapping("/api/v1/wishlist-items")
+@Profile("!test")
 public class WishlistItemController {
     
     private final WishlistItemService wishlistItemService;
