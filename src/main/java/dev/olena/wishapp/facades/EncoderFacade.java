@@ -3,20 +3,18 @@ package dev.olena.wishapp.facades;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import dev.olena.wishapp.encryption.Base64Encoder;
-import dev.olena.wishapp.encryption.BcryptEncoder;
 import dev.olena.wishapp.encryption.IEncoder;
 
 public class EncoderFacade {
     
-    private final BcryptEncoder bcryptEncoder;
-    private final Base64Encoder base64Encoder;
+    private final IEncoder bcryptEncoder;
+    private final IEncoder base64Encoder;
 
     @Autowired
     public EncoderFacade(@Qualifier("bcryptEncoder") IEncoder bcryptEncoder,
                         @Qualifier("base64Encoder") IEncoder base64Encoder) {
-        this.bcryptEncoder = (BcryptEncoder) bcryptEncoder;
-        this.base64Encoder = (Base64Encoder) base64Encoder;
+        this.bcryptEncoder = bcryptEncoder;
+        this.base64Encoder = base64Encoder;
     }
 
     public String encode(String input, String type) {
