@@ -25,7 +25,7 @@ public class FirebaseInitialization {
     @PostConstruct
     public void init() {
         try {
-            ClassPathResource serviceAccount = new ClassPathResource("Firebase.json");
+            ClassPathResource serviceAccount = new ClassPathResource("firebase.json");
 
             FirebaseOptions options = FirebaseOptions.builder()
             .setCredentials(GoogleCredentials.fromStream(serviceAccount.getInputStream()))

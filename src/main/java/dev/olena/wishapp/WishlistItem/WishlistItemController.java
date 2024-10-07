@@ -63,11 +63,10 @@ public class WishlistItemController {
     public ResponseEntity<?> updateWishlistItem(@PathVariable Long id, @RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("data") String wishlistItemDTOJson) {
         try {
             WishlistItemDTO wishlistItemDTO = objectMapper.readValue(wishlistItemDTOJson, WishlistItemDTO.class);
+
             if (file != null && !file.isEmpty()) {
                 String imageUrl = firebaseStorageService.uploadFile(file);
                 wishlistItemDTO.setImageUrl(imageUrl);
-            } else {
-                wishlistItemDTO.setImageUrl(null);
             }
 
             WishlistItemDTO result = wishlistItemService.updateWishlistItem(id, wishlistItemDTO);

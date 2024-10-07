@@ -31,8 +31,7 @@ public class WishlistDTO {
         this.userIdentifier = wishlist.getUser().getUserIdentifier();
         this.createdAt = wishlist.getCreatedAt();
         this.updatedAt = wishlist.getUpdatedAt();
-        this.items = wishlist.getItems().isEmpty() ? null : 
-                    wishlist.getItems().stream()
+        this.items = wishlist.getItems().stream()
                             .map(WishlistItemDTO::new)
                             .collect(Collectors.toList());
     }

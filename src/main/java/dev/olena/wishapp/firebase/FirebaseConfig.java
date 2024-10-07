@@ -15,7 +15,7 @@ public class FirebaseConfig {
 
     @Bean
     public Storage firebaseStorage() throws IOException {
-        var serviceAccount = new ClassPathResource("Firebase.json").getInputStream();
+        var serviceAccount = new ClassPathResource("firebase.json").getInputStream();
         return StorageOptions.newBuilder()
             .setCredentials(GoogleCredentials.fromStream(serviceAccount))
             .build()
