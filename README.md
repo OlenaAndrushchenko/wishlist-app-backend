@@ -1,4 +1,4 @@
-# Wishlist Application Backend
+# Wishlist App Backend
 
 ![Java](https://img.shields.io/badge/Java-21-orange.svg)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.9-green.svg)
