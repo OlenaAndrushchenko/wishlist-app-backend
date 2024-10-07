@@ -1,6 +1,6 @@
 services:
   database:
-    container_name: wishlist-app-database
+    container_name: ${CONTAINER_NAME}
     image: mysql:8.0-debian
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
